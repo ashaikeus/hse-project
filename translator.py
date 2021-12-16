@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-LANGUAGES = ["0", "Arabic", "German", "English", "Spanish", "French", "Hebrew", "Japanese", "Dutch", "Polish", "Portuguese", "Romanian", "Russian", "Turkish"]
+LANGUAGES = ["arabic", "german", "english", "spanish", "french", "hebrew", "japanese", "dutch", "polish", "portuguese", "romanian", "russian", "turkish"]
 
 
 def welcome():
@@ -47,7 +47,7 @@ def main(target_lang, source_lang, word):
               "\n\n"]
     output = "".join(output)
     save(word, output)
-    print(*open(f"{word}.txt", "r").readlines(), sep="")
+    print(*open(f"{word}.txt", "r", encoding="utf-8").readlines(), sep="")
 
 
 def save(word, output):

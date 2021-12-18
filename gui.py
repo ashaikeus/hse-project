@@ -1,5 +1,3 @@
-from translator import main, save, LANGUAGES
-
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
                             QMetaObject, QObject, QPoint, QRect,
                             QSize, QTime, QUrl, Qt)
@@ -11,10 +9,20 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
                                QLabel, QLineEdit, QMainWindow, QPushButton,
                                QSizePolicy, QSpacerItem, QStatusBar,
                                QTextBrowser, QWidget)
+from translator import main, save, LANGUAGES
 
 
 class Ui_MainWindow(object):
+    """
+    Главное окно, в котором расположен весь UI
+    """
     def setupUi(self, MainWindow):
+        """
+        Функция, которая создаёт объекты виджета.
+
+        Параметры:
+            MainWindow
+        """
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"Translator")
         MainWindow.resize(304, 406)
@@ -200,6 +208,12 @@ class Ui_MainWindow(object):
         save(self.filename, output)
 
     def retranslateUi(self, MainWindow):
+        """
+        Устанавливает текст и заголовки виджетов.
+
+        Параметры:
+            MainWindow
+        """
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Translator", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Target language:", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Source language:", None))

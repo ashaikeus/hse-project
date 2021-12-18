@@ -1,16 +1,17 @@
 from translator import main, save, LANGUAGES
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QLabel, QLineEdit, QMainWindow, QPushButton,
-    QSizePolicy, QSpacerItem, QStatusBar, QTextBrowser,
-    QWidget)
+                               QLabel, QLineEdit, QMainWindow, QPushButton,
+                               QSizePolicy, QSpacerItem, QStatusBar,
+                               QTextBrowser, QWidget)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -77,7 +78,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_4.addWidget(self.line_2, 0, 1, 1, 1)
 
-
         self.gridLayout.addLayout(self.gridLayout_4, 0, 0, 1, 1)
 
         self.gridLayout_8 = QGridLayout()
@@ -105,11 +105,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.pushButton, 1, 1, 1, 1)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum,
+                                          QSizePolicy.Expanding)
 
         self.gridLayout_8.addItem(self.verticalSpacer, 1, 2, 1, 1)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum,
+                                            QSizePolicy.Expanding)
 
         self.gridLayout_8.addItem(self.verticalSpacer_2, 1, 0, 1, 1)
 
@@ -126,7 +128,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.textBrowser_2, 3, 0, 1, 3)
 
-
         self.gridLayout.addLayout(self.gridLayout_8, 1, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -139,17 +140,23 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
 
         self.pushButton_2.setEnabled(False)
+
         for l in LANGUAGES:
             self.comboBox.addItem(l)
             self.comboBox_2.addItem(l)
+        self.comboBox.setCurrentIndex(2)
+        self.comboBox_2.setCurrentIndex(3)
 
         self.pushButton.clicked.connect(self.translate)
         self.pushButton_2.clicked.connect(self.save_button)
 
-    # setupUi
-
     def translate(self):
-        words, sentences = main(self.comboBox_2.currentText(), self.comboBox.currentText(), self.lineEdit.text())
+        """
+        Функция, запускающаяся при нажатии на кнопку "Translate"
+        """
+
+        words, sentences = main(self.comboBox_2.currentText(),
+                                self.comboBox.currentText(), self.lineEdit.text())
         self.update_text_browsers()
         self.textBrowser.append(words)
         self.textBrowser_2.append(sentences)
@@ -157,6 +164,11 @@ class Ui_MainWindow(object):
         self.pushButton_2.setEnabled(True)
 
     def update_text_browsers(self):
+        """
+        Перед каждым новым введённым словом обновляет textBrowser'ы,
+        чтобы у "Word Translations" и "Usage Examples" осталось оформление.
+        """
+
         self.textBrowser.setHtml(QCoreApplication.translate("MainWindow",
                                                             u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                             "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -175,11 +187,15 @@ class Ui_MainWindow(object):
                                                               None))
 
     def save_button(self):
+        """
+        Сохраняет результаты перевода в файл при нажатии кнопки.
+        """
+
         output = [f"{self.comboBox_2.currentText()} Word Translations:\n",
-            self.textBrowser.toPlainText(),
-            "\n\n",
-            f"{self.comboBox.currentText()} - {self.comboBox_2.currentText()} Sentence Examples:\n",
-            self.textBrowser_2.toPlainText()]
+                  self.textBrowser.toPlainText(),
+                  "\n\n",
+                  f"{self.comboBox.currentText()} - {self.comboBox_2.currentText()} Sentence Examples:\n",
+                  self.textBrowser_2.toPlainText()]
         output = "".join(output)
         save(self.filename, output)
 
@@ -190,9 +206,9 @@ class Ui_MainWindow(object):
         self.update_text_browsers()
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Save results to .txt file", None))
         self.lineEdit.setText("")
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Enter the word you want to translate...", None))
+        self.lineEdit.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", u"Enter the word you want to translate...", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Translate", None))
-    # retranslateUi
 
 
 if __name__ == '__main__':

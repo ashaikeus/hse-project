@@ -22,7 +22,8 @@ def main(target_lang, source_lang, word):
     try:
         assert word_strip(word)
     except AssertionError:
-        return f"{word} is not a valid word.", f"{word} is not a valid word."
+        return (f"{word} is not a valid word.",
+                f"{word} is not a valid word.")
     try:
         assert target_lang != source_lang
     except AssertionError:
